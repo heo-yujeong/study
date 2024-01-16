@@ -11,7 +11,7 @@ radius_is = '반지름 : '
 round_is = '원의 둘레 : '
 area_is = '원의 넓이 : '
 
-print(f'{PI_is}{PI}')
-print(f'{radius_is}{radius}')
-print(f'{round_is}{radius * 2 * PI}')
-print(f'{area_is}{radius * radius * PI}')
+print(f'{PI_is} {PI}')
+print(f'{radius_is} {radius}')
+print(f'{round_is} {radius * 2 * PI}')
+print(f'{area_is} {radius * radius * PI}')
