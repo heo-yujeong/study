@@ -27,9 +27,10 @@ rental_list = [
     '만복자서포기',
 ]
 
+
 for i in rental_list:
     if i not in list_of_book:
         print(f'{i} 은/는 보유하고 있지 않습니다.')
         break
-    else:
-        print('모든 도서가 대여 가능한 상태입니다.')
+else: 
+    print('모든 도서가 대여 가능한 상태입니다.')
