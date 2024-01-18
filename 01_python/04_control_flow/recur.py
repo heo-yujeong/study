@@ -36,14 +36,12 @@ def fibo(n):
     else:
         return fibo(n-1) + fibo(n-2)
     
-print(fibo(4))
+print(fibo(5))
 
 # while문으로 피보나치 수열
 def fibo_while(n):
-    result = 1
-    if n == 0 or n == 1:
-        result = 1
-    while n > 1:
-        pass
+    pass
 
 # for문으로 피보나치 수열
+def fibo_for(n):
+    pass
