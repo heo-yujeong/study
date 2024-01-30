@@ -19,11 +19,11 @@ for test_case in range(1, T+1):
             cnt_triplet += 1
             counts[i] -= 3
     for i in range(8):
-        if counts[i] == counts[i+1] == counts[i+2] == 1:
+        if counts[i] >= 1 and counts[i+1] >= 1 and counts[i+2] >= 1:
             cnt_run += 1
             counts[i] -= 1
             counts[i+1] -= 1
             counts[i+2] -= 1
-    if cnt_triplet == 2 or cnt_triplet == 2 or (cnt_triplet == 1 and cnt_run == 1):
+    if cnt_triplet + cnt_run == 2:
         is_baby_gin = True
     print(f'#{test_case} {is_baby_gin}')
