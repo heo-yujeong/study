@@ -12,4 +12,5 @@ for test_case in range(1, T+1):
     for num in num_list:
         count.append(len(num)) # 리스트를 순회하며 각 길이 구함
 
+    print(num_list)
     print(f'#{test_case} {max(count)}')
