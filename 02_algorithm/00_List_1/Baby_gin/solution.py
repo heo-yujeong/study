@@ -8,22 +8,25 @@ for test_case in range(1, T+1):
     counts = [0 for _ in range(10)]
 
     is_baby_gin = False
-    cnt_triplet = 0
-    cnt_run = 0
+    cnt = 0
+    idx = 0
 
     for num in num_list:
         counts[num] += 1
 
-    for i in range(10):
-        if counts[i] >= 3:
-            cnt_triplet += 1
-            counts[i] -= 3
-    for i in range(8):
-        if counts[i] >= 1 and counts[i+1] >= 1 and counts[i+2] >= 1:
-            cnt_run += 1
-            counts[i] -= 1
-            counts[i+1] -= 1
-            counts[i+2] -= 1
-    if cnt_triplet + cnt_run == 2:
+    while idx < len(counts):
+        if counts[idx] >= 3:
+            cnt += 1
+            counts[idx] -= 3
+            continue
+        elif idx <= 7 and counts[idx] >= 1 and counts[idx+1] >= 1 and counts[idx+2] >= 1:
+            cnt += 1
+            counts[idx] -= 1
+            counts[idx+1] -= 1
+            counts[idx+2] -= 1
+            continue
+        idx += 1
+
+    if cnt == 2:
         is_baby_gin = True
     print(f'#{test_case} {is_baby_gin}')
