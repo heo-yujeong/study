@@ -13,7 +13,7 @@ for test_case in range(1, T+1):
         if char in '{(':
             stack.append(char)
         elif char in '})':
-            if stack and (stack[-1] == '{' and char == '}') or (stack[-1] == '(' and char == ')'):
+            if stack and ((stack[-1] == '{' and char == '}') or (stack[-1] == '(' and char == ')')):
                 stack.pop()
             else:
                 break

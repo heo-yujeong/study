@@ -24,7 +24,7 @@ def KMP(pattern, target):
     pattern_idx = 0
     target_idx = 0
     # 현재 조사 위치가 조사대상의 범위를 벗나가기 전까지
-    # print(lps)
+    print(lps)
     while target_idx < len(target):
         # print(lps[pattern_idx])
         # print(target_idx, target[target_idx], pattern_idx, pattern[pattern_idx])
