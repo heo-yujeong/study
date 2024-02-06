@@ -16,7 +16,8 @@ for test_case in range(1, T+1):
         i += 1
         j += 1
 
+    print(f'#{test_case}', end=' ')
     if j == len(pattern):
-        print(f'{i-len(pattern)+1}번 글자부터 {i}번 글자에 있음')
+        print(1)
     else:
-        print('없어요')
+        print(0)
