@@ -38,22 +38,23 @@ def KMP(pattern, text):
 
         if pat_idx == len(pattern):
             cnt += 1
-            pat_idx = lps[pat_idx]
+            pat_idx = 0
 
     return cnt
 
 def make_lps(pat):
-    lps = [0] * len(pat)
+    lps = [0] * (len(pat) + 1)
     for idx in range(1, len(pat)):
-        if pat[lps[idx-1]] == pat[idx]:
+        if pat[lps[idx]] == pat[idx]:
             lps[idx] = lps[idx-1] + 1
-    lps.insert(0, -1)
+    lps[0] = -1
     return lps
 
 
 # 보이어 무어
 def boyer_moore(pattern, text):
-    lps = {pattern[idx] : len(pattern)-1-idx for idx in range(len(pattern))}
+    lps = {pattern[idx]: max(1,len(pattern)-1-idx) for idx in range(len(pattern))}
+    print(lps)
     txt_idx = 0
     pat_idx = len(pattern)
 

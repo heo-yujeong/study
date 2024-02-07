@@ -4,27 +4,23 @@ sys.stdin = open('input.txt')
 T = int(input())
 
 for test_case in range(1, T+1):
-    print(f'#{test_case}', end=' ')
     bracket = input()
 
     stack = []
+    result = False
 
     for brac in bracket:
         if brac in ['(', '[', '{']:
             stack.append(brac)
         elif brac in [')', ']', '}']:
-            if stack:
+            if stack and ((stack[-1] == '(' and brac == ')') or (stack[-1] == '[' and brac == ']') or (stack[-1] == '{' and brac == '}')):
                 top = stack.pop()
-                if (top == '(' and brac == ')') or (top == '[' and brac == ']') or (top == '{' and brac == '}'):
-                    continue
-                else:
-                    print('괄호가 맞지 않음')
-                    break
-        else:
-            continue
+            else:
+                break
 
-    if stack:
-        print('괄호 개수가 다름')
     else:
-        print('괄호 검사 완료!')
+        if not stack:
+            result = True
+
+    print(f'#{test_case} {result}')
 
