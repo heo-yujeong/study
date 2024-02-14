@@ -19,9 +19,12 @@ def sum_check(line, total_line, hap):
 T = int(input())
 
 for test_case in range(1, T+1):
+    # N * N 배열
     N = int(input())
     arr = [list(map(int, input().split())) for _ in range(N)]
 
+    # 입력 : N개 줄에 걸쳐 10보다 작은 자연수
+    # => 해당 값보다 큰 수로 초기화
     min_sum = N * 10
     # 한 줄씩 더했는지 확인
     line_check = [0] * N
