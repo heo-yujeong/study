@@ -5,6 +5,7 @@ for test_case in range(1, 11):
     V, E = map(int, input().split())
     arr = list(map(int, input().split()))
     working = [[] * (V+1) for _ in range(V+1)]
+    # 작업 순서 표시할 리스트
     order = []
 
     for _ in range(E):
