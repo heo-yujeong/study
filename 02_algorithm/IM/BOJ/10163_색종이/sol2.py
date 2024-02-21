@@ -6,15 +6,12 @@ N = int(input())
 for num in range(1, N+1):
     x, y, d, r = map(int, input().split())
     for i in range(x, x+d):
-        for j in range(y, y+r):
-            board[i][j] = num
+        board[i][y:y+r] = [num] * r
 
 for k in range(1, N+1):
     cnt = 0
-    for i in range(1001):
-        for j in range(1001):
-            if board[i][j] == k:
-                cnt += 1
+    for b in board:
+        cnt += b.count(k)
     print(cnt)
 
-# 53점
+# 100점
