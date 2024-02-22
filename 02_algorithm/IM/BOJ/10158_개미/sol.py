@@ -5,15 +5,17 @@ w, h = map(int, input().split())
 p, q = map(int, input().split())
 t = int(input())
 
-dx = dy = 1
+x_pm = (p + t) // w
+y_pm = (q + t) // h
 
-for _ in range(t, 0, -1):
-    nx = p + dx
-    ny = q + dy
-    if 0 <= nx <= w and 0 <= ny <= h:
-        p, q = nx, ny
-        if p == 0 or p == w:
-            dx = -dx
-        if q == 0 or q == h:
-            dy = -dy
-print(p, q)
+if x_pm % 2 == 0:
+    x = (p + t) % w
+else:
+    x = w - (p + t) % w
+
+if y_pm % 2 == 0:
+    y = (q + t) % h
+else:
+    y = h - (q + t) % h
+
+print(x, y)

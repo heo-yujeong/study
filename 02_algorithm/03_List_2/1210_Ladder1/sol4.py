@@ -29,5 +29,5 @@ for _ in range(10):
     for i in range(100):
         if arr[99][i] == 2:
             result = search(99, i)
-
+            print(i)
     print(f'#{test_case} {result}')
