@@ -6,7 +6,6 @@ T = int(input())
 for test_case in range(1, T+1):
     N, M = map(int, input().split())
     board = [list(input()) for _ in range(N)]
-
     min_cnt = N*M
 
     for first_bar in range(1, N-1):
