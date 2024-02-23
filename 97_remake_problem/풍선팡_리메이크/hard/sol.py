@@ -12,70 +12,76 @@ T = int(input())
 for tc in range(1, T+1):
     N, M = map(int, input().split())
     board = [list(map(int, input().split())) for _ in range(N)]
-
-    max_pang = []
+    max_pang = 0
 
     for i in range(N):
         for j in range(M):
-            pang = set()
-            pang_num = 0
             result = 0
+            pang = set()
+            pang_num = board[i][j]
+            pang_num2 = 0
             pang.add((i, j))
-            # 1번 시도 = 짝수
+
             if board[i][j] % 2 == 0:
                 for k in range(4):
                     nx = i + dx1[k]
                     ny = j + dy1[k]
                     if 0 <= nx < N and 0 <= ny < M:
+                        pang_num += board[nx][ny]
                         pang.add((nx, ny))
-                for x, y in pang:
-                    pang_num += board[x][y]
-                # 1번 시도 결과 = 짝수
-                if pang_num % 2 == 0:
-                    for a in range(N):
-                        for b in range(M):
-                            pang.add((a, b))
-                            if board[a][b] % 2 == 0:
-                                for c in range(4):
-                                    na = a + dx1[c]
-                                    nb = b + dy1[c]
-                                    if 0 <= na < N and 0 <= nb < M:
-                                        pang.add((na, nb))
-                            else:
-                                for c in range(4):
-                                    na = a + dx2[c]
-                                    nb = b + dy2[c]
-                                    if 0 <= na < N and 0 <= nb < M:
-                                        pang.add((na, nb))
-            # 첫번째 시도 = 홀수
+
+                    if board[i][j] % 2 == pang_num % 2:
+                        for a in range(N):
+                            for b in range(M):
+                                pang_num2 = board[a][b]
+                                if (a, b) not in pang:
+                                    if board[a][b] % 2 == 0:
+                                        for c in range(4):
+                                            mx = a + dx1[c]
+                                            my = b + dy1[c]
+                                            if 0 <= mx < N and 0 <= my < M and (mx, my) not in pang:
+                                                pang_num2 += board[mx][my]
+                                        result = pang_num + pang_num2
+                                        if max_pang < result:
+                                            max_pang = result
+                                    else:
+                                        for c in range(4):
+                                            mx = a + dx2[c]
+                                            my = b + dy2[c]
+                                            if 0 <= mx < N and 0 <= my < M and (mx, my) not in pang:
+                                                pang_num2 += board[mx][my]
+                                        result = pang_num + pang_num2
+                                        if max_pang < result:
+                                            max_pang = result
             else:
                 for k in range(4):
                     nx = i + dx2[k]
                     ny = j + dy2[k]
                     if 0 <= nx < N and 0 <= ny < M:
+                        pang_num += board[nx][ny]
                         pang.add((nx, ny))
-                for x, y in pang:
-                    pang_num += board[x][y]
-                # 1번 시도 결과 = 홀수
-                if pang_num % 2 != 0:
-                    for a in range(N):
-                        for b in range(M):
-                            pang.add((a, b))
-                            if board[a][b] % 2 == 0:
-                                for c in range(4):
-                                    na = a + dx1[c]
-                                    nb = b + dy1[c]
-                                    if 0 <= na < N and 0 <= nb < M:
-                                        pang.add((na, nb))
-                            else:
-                                for c in range(4):
-                                    na = a + dx2[c]
-                                    nb = b + dy2[c]
-                                    if 0 <= na < N and 0 <= nb < M:
-                                        pang.add((na, nb))
+                    if board[i][j] % 2 == pang_num % 2:
+                        for a in range(N):
+                            for b in range(M):
+                                pang_num2 = board[a][b]
+                                if (a, b) not in pang:
+                                    if board[a][b] % 2 == 0:
+                                        for c in range(4):
+                                            mx = a + dx1[c]
+                                            my = b + dy1[c]
+                                            if 0 <= mx < N and 0 <= my < M and (mx, my) not in pang:
+                                                pang_num2 += board[mx][my]
+                                        result = pang_num + pang_num2
+                                        if max_pang < result:
+                                            max_pang = result
+                                    else:
+                                        for c in range(4):
+                                            mx = a + dx2[c]
+                                            my = b + dy2[c]
+                                            if 0 <= mx < N and 0 <= my < M and (mx, my) not in pang:
+                                                pang_num2 += board[mx][my]
+                                        result = pang_num + pang_num2
+                                        if max_pang < result:
+                                            max_pang = result
 
-            for x, y in pang:
-                result += board[x][y]
-            max_pang.append(result)
-            print(pang, result)
-    print(f'#{tc} {max(max_pang)}')
+    print(f'#{tc} {max_pang}')
