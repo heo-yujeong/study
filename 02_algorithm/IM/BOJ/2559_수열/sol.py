@@ -10,5 +10,5 @@ ondo.append(sum(temp[:K]))
 
 for i in range(N-K):
     ondo.append(ondo[i] - temp[i] + temp[K+i])
-
+print(ondo)
 print(max(ondo))

@@ -14,7 +14,7 @@ for tc in range(1, T+1):
     switch = [None] + list(map(int, input().split()))
     num_stu = int(input())
     sosu_list = []
-    for i in range(2, N+1):
+    for i in range(1, N+1):
          if isSosu(i):
              sosu_list.append(i)
 
