@@ -32,7 +32,6 @@ board = [list(map(int, input().split())) for _ in range(5)]
 number = []
 for _ in range(5):
     number.extend(map(int, input().split()))
-
 for n in range(len(number)):
     for i in range(5):
         for j in range(5):
