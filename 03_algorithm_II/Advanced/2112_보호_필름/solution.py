@@ -1,6 +1,34 @@
 import sys
 sys.stdin = open('input.txt')
 
+def per_test(film_arr):
+    for j in range(W):
+        fir_bar = film_arr[0][j]
+        cell_cnt = 1
+        for i in range(1, D):
+            if film_arr[i][j] == fir_bar:
+                cell_cnt += 1
+                if cell_cnt >= K:
+                    break
+            else:
+                fir_bar = film_arr[i][j]
+                cell_cnt = 1
+        if cell_cnt != K:
+            return False
+    return True
+
+def comb():
+    # 인자는 뭘받아야하지..
+    # 일단 아래 cnt 받아서 몇개 줄?
+    # 어디줄을 바꿀건지
+    # 바꾸고 원상복구 하려면 배열 카피해서 해야하는거 아닌감
+    # 00001...(1의 개수로 약품 사용횟수 나타낼수 있지않을까)
+    # 1인 곳을 0으로 만들어보고 pertest =>  원상복구, 1로 만들어보고 pertest => 원상복구
+    # 출력을 뭘로하지...
+    # 약품 사용 횟수?
+    # 점심식사때 계단 선택한거처럼... 모두 0번 or 모두 1번...
+    pass
+
 T = int(input())
 
 for test_case in range(1, T+1):
@@ -9,32 +37,10 @@ for test_case in range(1, T+1):
     # A: 0, B: 1
     film = [list(map(int, input().split())) for _ in range(D)]
 
-    '''
-    성능검사하는 함수
-    인자 (합격기준 k, 투입횟수 cnt)
-    return 합격 여부
-    음... 함수 이상한뎁....
-    return 투입 횟수
-      열우선탐색 => 한 줄이라도 없으면 바로 멈춤!
-      + 투입횟수 1 해서 다시 탐색
-    투입횟수 0일때
-    세로를 확인하면서 각 줄에 합격기준개의 같은것이 있는지 확인
-    투입횟수 1일때 => 0번째 줄부터 1 or 0 넣어보기
-    출력 결과 : 성능검사를 통과할 수 있는 약품의 최소 투입 횟수
+    if K == 1 or per_test(film):
+        input_cnt = 0
+    else:
+        for cnt in range(1, D+1):
+            comb()
 
-
-
-    함수 2개 필요한거같은뎁
-    함수 1.
-    dfs하듯이 cnt == max되면 멈추고....
-    어디를 바꿀지 체크
-    위에 바꿨다가 함수 돌려보고 바꾼거 해제
-
-    함수 2.
-    성능검사 통과 가능한지 체크
-    (몇번째 줄 바꾸는지 체크해서 함수 ㄱ)
-    return true false
-    '''
-    '''
-    다 필요없이 하나의 함수로 체크하게 만들어볼까..
-    '''
+    print(f'#{test_case} {input_cnt}')
