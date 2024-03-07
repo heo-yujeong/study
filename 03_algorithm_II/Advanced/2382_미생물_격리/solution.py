@@ -16,6 +16,7 @@ for test_case in range(1, T+1):
     while True:
         time += 1
         for mic in microbe:
+            remove_list = []
             mic[0] += dx[mic[3]]
             mic[1] += dy[mic[3]]
             if mic[0] in [0, N-1] or mic[1] in [0, N-1]:
@@ -29,7 +30,9 @@ for test_case in range(1, T+1):
                 else:
                     mic[3] = 3
                 if mic[2] == 0:
-                    microbe.remove(mic)
+                    remove_list.append(mic)
+        for rl in remove_list:
+            microbe.remove(rl)
 
         plus_dict = {}
         for i in range(len(microbe)-1):
