@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Position</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 1500px;
+    }
+
+    .container {
+      position: relative;
+      height: 300px;
+      width: 300px;
+      border: 1px solid black;
+    }
+
+    .box {
+      height: 100px;
+      width: 100px;
+      border: 1px solid black;
+    }
+
+    .static {
+      position: static;
+      /** 주나마나 상관없음 **/
+      background-color: lightcoral;
+    }
+
+    .absolute {
+      position: absolute;
+      background-color: lightgreen;
+      top: 100px;
+      left: 100px;
+      /* 본인의 기존 위치를 버림 */
+      /* 누구를 기준으로 움직여? => static이 아닌 부모의 위치 */
+      /* 현재의 부모는 container! */
+    }
+
+    .relative {
+      position: relative;
+      background-color: lightblue;
+      top: 100px;
+      left: 100px;
+      /* top을 주면 아래로 움직임 => 본인의 static 시절의 위치를 기준으로 움직이기 때문 */
+      /* 본인의 과거 위치를 버리지 않음 => 빈공간이 되어도 자리는 차지함 */
+      /* relative의 위치가 바뀔때마다 움직임! */
+    }
+
+    .fixed {
+      /* 본인의 기존 위치를 버림 */
+      /* 완전히 화면에 고정! 스크롤이 이동해도 위치 벗어나지 X */
+      position: fixed;
+      background-color: gray;
+      top: 0;
+      right: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="box static">Static</div>
+    <div class="box absolute">Absolute</div>
+    <div class="box relative">Relative</div>
+    <div class="box fixed">Fixed</div>
+  </div>
+</body>
+
+</html>
