@@ -14,23 +14,22 @@ def dfs(y, x, iscut):
             if map_info[y][x] > map_info[ny][nx]:
                     visit[ny][nx] = visit[y][x] + 1
                     dfs(ny, nx, iscut)
-                    if max_len < visit[y][x]:
-                        max_len = visit[y][x]
+                    if max_len < visit[ny][nx]:
+                        max_len = visit[ny][nx]
                     visit[ny][nx] = 0
             if map_info[y][x] <= map_info[ny][nx]:
                 if not iscut:
-                    for l in range(map_info[y][x]-map_info[ny][nx]+1, K+1):
+                    for l in range(map_info[ny][nx]-map_info[y][x]+1, K+1):
                         if map_info[ny][nx] - l < map_info[y][x]:
                             map_info[ny][nx] -= l
                             iscut = True
                             visit[ny][nx] = visit[y][x] + 1
                             dfs(ny, nx, iscut)
-                            if max_len < visit[y][x]:
-                                max_len = visit[y][x]
+                            if max_len < visit[ny][nx]:
+                                max_len = visit[ny][nx]
                             map_info[ny][nx] += l
                             iscut = False
                             visit[ny][nx] = 0
-
 
 T = int(input())
 
