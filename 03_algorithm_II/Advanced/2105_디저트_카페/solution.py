@@ -30,8 +30,8 @@ for test_case in range(1, T+1):
 
     max_dessert = -1
 
-    for i in range(N):
-        for j in range(N):
+    for i in range(N-1):
+        for j in range(1, N-1):
             visit[i][j] = 2
             dfs(i, j, 0, [cafe[i][j]])
             visit[i][j] = 0
