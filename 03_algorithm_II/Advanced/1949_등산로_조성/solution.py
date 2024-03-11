@@ -10,12 +10,26 @@ def dfs(y, x, iscut):
     for i in range(4):
         nx = x + dx[i]
         ny = y + dy[i]
-        if 0 <= nx < N and 0 <= ny < N:
-            pass
-            # 더 낮고 방문한 적이 없으면 방문 체크(bfs처럼 이동거리)
-
-            # 더 낮지 않은데, iscut이 false이면
-            # 자르고 dfs => 자르고 나서 다시 되돌려주기!
+        if 0 <= nx < N and 0 <= ny < N and not visit[ny][nx]:
+            if map_info[y][x] > map_info[ny][nx]:
+                    visit[ny][nx] = visit[y][x] + 1
+                    dfs(ny, nx, iscut)
+                    if max_len < visit[y][x]:
+                        max_len = visit[y][x]
+                    visit[ny][nx] = 0
+            if map_info[y][x] <= map_info[ny][nx]:
+                if not iscut:
+                    for l in range(map_info[y][x]-map_info[ny][nx]+1, K+1):
+                        if map_info[ny][nx] - l < map_info[y][x]:
+                            map_info[ny][nx] -= l
+                            iscut = True
+                            visit[ny][nx] = visit[y][x] + 1
+                            dfs(ny, nx, iscut)
+                            if max_len < visit[y][x]:
+                                max_len = visit[y][x]
+                            map_info[ny][nx] += l
+                            iscut = False
+                            visit[ny][nx] = 0
 
 
 T = int(input())
