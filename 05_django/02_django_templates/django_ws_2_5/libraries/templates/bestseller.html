@@ -1,15 +1,37 @@
 {% extends "base.html" %}
 {% block content %}
-  <div class="container my-4">
-    <h3 class="fw-bold text-center mb-3">베스트 셀러 목록</h3>
+  <div class="m-5">
+    <h3 class="fw-bold text-center mb-5">베스트 셀러 목록</h3>
     {% for item in result %}
-    {% if result.index(item) <= 2 %}{% endif %}
-      <div>
-        <p class="fw-bold fs-5">제목 : {{ item.title }}</p>
-        <p class="text-body-secondary">저자 : {{ item.author }}</p>
-        <p>설명 : {{ item.bestDuration }}</p>
-        <hr>
-      </div>
+      {% if forloop.counter0 == 0 %}
+        <div class="bg-danger bg-gradient">
+          <p class="fw-bold fs-5">제목 : {{ item.title }}</p>
+          <p class="text-body-secondary">저자 : {{ item.author }}</p>
+          <p>설명 : {{ item.bestDuration }}</p>
+          <hr>
+        </div>
+      {% elif forloop.counter0 == 1 %}
+        <div class="bg-warning bg-gradient">
+          <p class="fw-bold fs-5">제목 : {{ item.title }}</p>
+          <p class="text-body-secondary">저자 : {{ item.author }}</p>
+          <p>설명 : {{ item.bestDuration }}</p>
+          <hr>
+        </div>
+      {% elif forloop.counter0 == 2 %}
+        <div class="bg-success bg-gradient">
+          <p class="fw-bold fs-5">제목 : {{ item.title }}</p>
+          <p class="text-body-secondary">저자 : {{ item.author }}</p>
+          <p>설명 : {{ item.bestDuration }}</p>
+          <hr>
+        </div>
+      {% else %}
+        <div>
+          <p class="fw-bold fs-5">제목 : {{ item.title }}</p>
+          <p class="text-body-secondary">저자 : {{ item.author }}</p>
+          <p>설명 : {{ item.bestDuration }}</p>
+          <hr>
+        </div>
+      {% endif %}
     {% endfor %}
   </div>
 {% endblock content %}
