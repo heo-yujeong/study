@@ -3,11 +3,18 @@ sys.stdin = open('input.txt')
 
 def rotate(num, dir):
     check[num] = 1
-    # 자성 다를 경우 회전!!!!
-    # 본인 기준 오른쪽 자석과 왼쪽 자석 모두 생각해야함!
-    # 회전 후에 리스트 순서 맞추기!
 
+    if num > 0:
+        if mag[num][6] != mag[num-1][2] and not check[num-1]:
+            rotate(num-1, dir*(-1))
+    if num < 3:
+        if mag[num][2] != mag[num+1][6] and not check[num+1]:
+            rotate(num+1, dir*(-1))
 
+    if dir == 1:
+        mag[num] = [mag[num][-1]] + mag[num][:-1]
+    else:
+        mag[num] = mag[num][1:] + [mag[num][0]]
 
 T = int(input())
 
