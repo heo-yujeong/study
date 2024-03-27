@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1 class="fw-bold">travels</h1>
+  <a href="{% url "travels:create" %}" class="text-primary text-decoration-none">CREATE</a>
+  <hr>
+  {% for travel in travels %}
+    <p>장소 : {{travel.location}}</p>
+    <p>계획 : {{travel.plan}}</p>
+    <a href="{% url "travels:detail" travel.pk %}">자세히 보기</a>
+    <hr>
+  {% endfor %}
+{% endblock content %}
