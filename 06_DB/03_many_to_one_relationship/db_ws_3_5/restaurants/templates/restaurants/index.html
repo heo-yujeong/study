@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block content %}
 <h1>레스토랑 전체 목록</h1>
@@ -10,7 +9,7 @@
     <a href="{% url 'restaurants:detail' restaurant.pk %}">
       <li>이름 : {{ restaurant.name }}</li>
       {% if restaurant.category.image %}
-      <img src="{% static "korean_food.jpg" %}" alt="#" style="width:200px">
+      <img src="{{ restaurant.category.image.url }}" alt="#" style="width:200px">
       {% else %}
       <li>
         <p>이미지가 없습니다.</p>
