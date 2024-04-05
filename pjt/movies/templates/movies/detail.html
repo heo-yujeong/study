@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>DETAIL PAGE</h1>
+<h3>{{movie.title}}</h3>
+<p>{{movie.summary}}</p>
+<hr>
+<div class="d-flex">
+<form action="">
+  <input type="submit" value="UPDATE" class="btn btn-secondary me-2">
+</form>
+<form action="" method="post">
+  {% csrf_token %}
+  <input type="submit" value="DELETE" class="btn btn-danger">
+</form>
+</div>
+<hr>
+<a href="" class="btn btn-primary">BACK</a>
+{% endblock content %}
