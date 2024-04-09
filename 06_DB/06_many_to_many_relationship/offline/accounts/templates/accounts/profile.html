@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>{{profile_owner.username}}'s PROFILE PAGE</h1>
+  {% if request.user == profile_owner %}
+    <form action="{% url "accounts:logout" %}" method="post">
+      {% csrf_token %}
+      <input type="submit" value="LOGOUT">
+    </form>
+  {% endif %}
+  <hr>
+  {% if request.user != profile_owner %}
+    <form action="{% url "accounts:follow" profile_owner.pk %}" method="post">
+      {% csrf_token %}
+      {% if request.user in profile_owner.followers.all %}
+        <input type="submit" value="Unfollow">
+      {% else %}
+        <input type="submit" value="Follow">
+      {% endif %}
+    </form>
+  {% endif %}
+{% endblock content %}
