@@ -42,11 +42,12 @@ const buttonClickHandler = (choice) => {
 
   const choices = ['scissors', 'rock', 'paper']
 
-  const randomIndex = Math.floor(Math.random() * 3)
+  let randomIndex = Math.floor(Math.random() * 3)
   const player2Choice = choices[randomIndex]
 
   let intervalId = setInterval(() => {
-    player2Img.src = `./img/${choices[Math.floor(Math.random() * 3)]}.png`
+    player2Img.src = `./img/${choices[randomIndex]}.png`
+    randomIndex = (randomIndex + 1) % 3
   }, 100)
 
   setTimeout(() => {
