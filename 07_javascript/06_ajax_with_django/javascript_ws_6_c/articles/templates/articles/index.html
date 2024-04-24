@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+  <h1>Articles</h1>
+  {% if request.user.is_authenticated %}
+    <h3>Hello, {{ user.username }}</h3>
+    <a href="{% url 'accounts:profile' user.username %}">내 프로필</a>
+    <a href="{% url 'articles:create' %}">NEW</a>
+    <form action="{% url 'accounts:logout' %}" method="POST">
+      {% csrf_token %}
+      <input type="submit" value="Logout">
+    </form>  
+    <form action="{% url 'accounts:delete' %}" method="POST">
+      {% csrf_token %}
+      <input type="submit" value="회원탈퇴">
+    </form>  
+    <a href="{% url 'accounts:update' %}">회원정보 수정</a>
+  {% else %}
+    <a href="{% url 'accounts:login' %}">Login</a>
+    <a href="{% url 'accounts:signup' %}">Signup</a>
+  {% endif %}
+
+  <hr>
+
+  <article class="article-container">
+    {% for article in articles %}
+      <p>작성자 : <a href="{% url 'accounts:profile' article.user.username %}">{{ article.user }}</a></p>
+      <p>글 번호: {{ article.pk }}</p>
+      <a href="{% url 'articles:detail' article.pk %}">
+        <p>글 제목: {{ article.title }}</p>
+      </a>
+      <p>글 내용: {{ article.content }}</p>
+      <form data-article-id="{{ article.pk }}">
+        {% csrf_token %}
+        {% if request.user in article.like_users.all %}
+          <input class="ms-2 fa-solid fa-heart" type="submit" value="&#xf004;" style="color: #ff0000; border: 0; background-color: transparent;" id="like-{{ article.pk }}">
+        {% else %}
+          <input class="ms-2 fa-regular fa-heart" type="submit" value="&#xf004;" style="border:0; background-color: transparent;" id="like-{{ article.pk }}">
+        {% endif %}
+      </form>      
+      <hr>
+    {% endfor %}
+  </article>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+    const articleContainer = document.querySelector('.article-container')
+
+    const likeHandler = function (event) {
+      const articleId = event.target.dataset.articleId
+      axios({
+        method: 'post',
+        url: `/articles/${articleId}/likes/`,
+        headers: {'X-CSRFToken': csrftoken,},
+      })
+        .then((response) => {
+          const isLiked = response.data.is_liked
+          const likeBtn = document.querySelector(`#like-${articleId}`)
+          if (isLiked === true) {
+            likeBtn.setAttribute('class', 'ms-2 fa-solid fa-heart')
+            likeBtn.style.color = "#ff0000"
+          } else {
+            likeBtn.setAttribute('class', 'ms-2 fa-regular fa-heart')
+            likeBtn.style.color = "#000000"
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+
+    articleContainer.addEventListener('submit', function (event) {
+      event.preventDefault()
+      likeHandler(event)
+    })
+
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
