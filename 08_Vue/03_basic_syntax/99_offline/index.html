@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <h1>현재 작성된 할 일 목록 : {{countOfTodos}}</h1>
+    <!-- <h1>현재 작성된 할 일 목록 : {{countOfTodosMethod()}}</h1> -->
+    <article v-if="isLogin">
+      <div v-for="todo in todos" :key="todo.id">
+        <div class="card" @click="goDetail(todo)">
+          <p :class="{done:todo.completed}">{{todo.title}}</p>
+          <p>{{todo.completed}}</p>
+          <hr>
+        </div>
+      </div>
+    </article>
+    <article v-if="!isLogin">
+      <form @submit.prevent="login">
+        <label for="username">username : </label>
+        <input type="text" name="username" id="username" v-model="username" @input="userNameValidator">
+        <p v-show="!userNameError.isValid">{{userNameError.text}}</p>
+        
+        <label for="password">password : </label>
+        <input type="password" name="password" id="password" v-model="password">
+        
+        <input type="submit" value="login">
+      </form>
+    </article>
+    <section class="detail" v-show="todo">
+      <button @click="closeDetail">X</button>
+      <h1>{{todo.id}} | {{todo.title}}</h1>
+      <p>userId : {{todo.userId}}</p>
+      <p>isCompleted : {{todo.completed}}</p>
+
+      <div v-for="comment in detailComments" :key="comment.id">
+        <p>{{comment.id}} | {{comment.body}}</p>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const { createApp, ref, onMounted, computed, watch } = Vue
+    const app = createApp({
+      setup() {
+        const isLogin = ref(false)
+
+        const todos = ref([])
+        const todo = ref(false)
+        const comments = ref([])
+
+        const countOfTodos = computed(() => {
+          return todos.value.length
+        })
+
+        const countOfTodosMethod = function() {
+          return todos.value.length
+        }
+        // const detailComments = computed(() => {
+        //   return comments.value.filter(comment => {
+        //     return comment.postId === todo.value.id
+        //   })
+        // })
+
+        const detailComments = ref([])
+        watch(todo, (newV, oldV) => {
+          detailComments.value = comments.value.filter(comment => {
+            return comment.postId === newV.id
+          })
+        }
+        )
+
+        const goDetail = function(item) {
+          todo.value = item
+        }
+        const closeDetail = function() {
+          todo.value = false
+        }
+
+        onMounted(() => {
+          axios({
+            methods: 'get',
+            url: 'https://jsonplaceholder.typicode.com/todos/'
+          })
+            .then(res => {
+              todos.value = res.data.slice(0, 100)
+            })
+            .catch(err => console.log(err))
+          
+          axios({
+            methods: 'get',
+            url: 'https://jsonplaceholder.typicode.com/comments/'
+          })
+            .then(res => comments.value = res.data)
+            .catch(err => console.log(err))
+        })
+
+        const login = function() {
+          if (!userNameError.value.isValid){
+            console.log('유효성 통과 못함')
+          } else {
+            if (username.value.trim() && password.value.trim()) {
+              isLogin.value = true
+            }
+          }
+        }
+
+        const userNameError = ref({
+          text: '',
+          isValid: true
+        })
+        const username = ref('')
+        const password = ref('')
+        const userNameValidator = function() {
+          if (username.value.length > 12) {
+            userNameError.value.isValid = false
+            userNameError.value.text = '이름은 12글자 까지만 작성할 수 있습니다.'
+          } else {
+            userNameError.value.isValid = true
+            userNameError.value.text = ''
+          }
+        }
+
+        return {
+          login,
+          isLogin,
+          username,
+          password,
+          userNameValidator,
+          userNameError,
+          todos,
+          comments,
+          detailComments,
+          todo,
+          countOfTodos,
+          goDetail,
+          closeDetail,
+          countOfTodosMethod
+        }
+      }
+    })
+
+    app.mount('#app')
+  </script>
+</body>
+</html>
